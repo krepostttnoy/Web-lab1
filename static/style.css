@@ -1,0 +1,36 @@
+/* Селектор по ID */
+#header {
+    font-family: cursive;
+    font-size: 20px;
+    color: rgb(115, 115, 115);
+    text-align: center;
+}
+
+table {
+    margin: auto
+}
+
+/* Селектор класса */
+.input-field {
+    margin: 5px;   /* отступы в пикселях */
+    padding: 3px;
+}
+
+/* Селектор атрибута */
+input[type="number"] {
+    border: 2px solid green;
+}
+
+/* Селектор потомков */
+table td {
+    vertical-align: top;
+}
+
+/* Наследование и каскадирование */
+body {
+    font-family: Arial, sans-serif;
+    color: black;
+}
+#header {
+    color: rgb(150, 150, 150); /* перекрывает цвет выше */
+}
