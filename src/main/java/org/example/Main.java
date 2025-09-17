@@ -2,23 +2,31 @@ package org.example;
 
 import com.fastcgi.FCGIInterface;
 
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         FCGIInterface fcgiInterface = new FCGIInterface();
+        Response response = new Response();
 
         while(fcgiInterface.FCGIaccept() >= 0){
-            Response response = new Response();
-
-            long startTime = System.currentTimeMillis();
-
             String query = System.getProperties().getProperty("QUERY_STRING");
             RequestHandler handler = new RequestHandler(query);
 
-            boolean hit = calculate(handler.getX(), handler.getY(), handler.getR());
-            String createdResponse = response.createResponse(handler.getX(), handler.getY(), handler.getR(), hit, startTime);
+            long startTime = System.nanoTime();
+            String createdResponse = "";
+            ArrayList<String> responses = new ArrayList<>();
+
+            for(int i = 0; i < handler.getSizeR(); i++){
+                boolean hit = calculate(handler.getX(), handler.getY(), handler.getR().get(i));
+                createdResponse = response.createResponse(handler.getX(), handler.getY(), handler.getR().get(i), hit, startTime);
+                responses.add(createdResponse);
+            }
+
+            String fullResponse = "[\n" + String.join(",\n", responses) + "\n]";
 
             try {
-                response.sendResponse(createdResponse);
+                response.sendResponse(fullResponse);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -26,7 +34,7 @@ public class Main {
 
     }
 
-    private static boolean calculate(int x, int y, int r){
+    private static boolean calculate(int x, float y, Integer r){
         //first
         if (x > 0 && y > 0){
             if(((x + y/2) - r/2) > 0){

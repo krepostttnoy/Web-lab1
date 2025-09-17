@@ -2,13 +2,15 @@ package org.example;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RequestHandler {
     private final int x;
-    private final int y;
-    private final int r;
+    private final float y;
+    private final ArrayList<Integer> r;
 
     public RequestHandler(String request){
         if (request == null || request.isEmpty()){
@@ -16,11 +18,23 @@ public class RequestHandler {
         }
 
         var params = splitter(request);
+        String rRaw = params.get("r");
+        String[] values = rRaw.split(",");
+        int[] rNumbers = Arrays.stream(values)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
         validateParams(params);
 
         this.x = Integer.parseInt(params.get("x"));
-        this.y = Integer.parseInt(params.get("y"));
-        this.r = Integer.parseInt(params.get("r"));
+        this.y = Float.parseFloat(params.get("y"));
+        ArrayList<Integer> R = new ArrayList<>(0);
+        for(int r: rNumbers){
+            R.add(r);
+
+        }
+        this.r = R;
+        //this.r = Integer.parseInt(params.get("r"));
     }
 
     private String validateParams(Map<String, String> params){
@@ -43,7 +57,7 @@ public class RequestHandler {
         String[] pairs = request.split("&");
 
         for (String pair: pairs){
-            String[] parts = pair.split("=", 2);
+            String[] parts = pair.split("=");
             String key = URLDecoder.decode(parts[0], StandardCharsets.UTF_8);
             String value;
             if(parts.length > 1) {
@@ -60,11 +74,15 @@ public class RequestHandler {
         return x;
     }
 
-    public int getY(){
+    public float getY(){
         return y;
     }
 
-    public int getR(){
+    public int getSizeR(){
+        return r.size();
+    }
+
+    public ArrayList<Integer> getR(){
         return r;
     }
 

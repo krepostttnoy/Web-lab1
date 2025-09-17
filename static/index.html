@@ -8,7 +8,6 @@
 
 <body>
 <table border="3" cellpadding="10" cellspacing="0">
-    <!-- Header -->
     <tr>
         <td colspan="7" id="header">
             Клименко Марк Анатольевич <br>
@@ -16,8 +15,6 @@
             Вариант: 474305
         </td>
     </tr>
-
-    <!-- Form -->
     <tr>
         <td>Введите координаты точки и радиус:</td>
         <td>
@@ -41,20 +38,6 @@
                             <input type="hidden" name="x" id="hiddenX">
 
                         </td>
-
-                        <script>
-                            let selectedXBtn = null;
-
-                            function selectX(button) {
-                                if (selectedXBtn) {
-                                    selectedXBtn.style.border = "";
-                                }
-                                button.style.border = "2px solid green";
-                                selectedXBtn = button;
-
-                                document.getElementById("hiddenX").value = button.value;
-                            }
-                        </script>
                     </tr>
                     <tr>
                         <td colspan="1">
@@ -68,20 +51,11 @@
                         <td colspan="2">
                             <fieldset>
                                 <legend>Select R:</legend>
-                                <input type="checkbox" name="r" value="1" onclick="onlyOne(this)"> 1
-                                <input type="checkbox" name="r" value="2" onclick="onlyOne(this)"> 2
-                                <input type="checkbox" name="r" value="3" onclick="onlyOne(this)"> 3
-                                <input type="checkbox" name="r" value="4" onclick="onlyOne(this)"> 4
-                                <input type="checkbox" name="r" value="5" onclick="onlyOne(this)"> 5
-
-                                <script>
-                                    function onlyOne(checkbox){
-                                        var checkboxes = document.getElementsByName('r');
-                                        checkboxes.forEach((item) => {
-                                                if(item !== checkbox) item.checked = false;
-                                            }
-                                        )};
-                                </script>
+                                <input type="checkbox" name="r" value="1"> 1
+                                <input type="checkbox" name="r" value="2"> 2
+                                <input type="checkbox" name="r" value="3"> 3
+                                <input type="checkbox" name="r" value="4"> 4
+                                <input type="checkbox" name="r" value="5"> 5
                             </fieldset>
                         </td>
                     </tr>
@@ -114,9 +88,8 @@
     </tr>
     </thead>
     <tbody id="results-body">
-    <!-- здесь будут результаты -->
     </tbody>
 </table>
-<script src="script.js"></script>
+<script src="script.js?v=1.1"></script>
 </body>
 </html>

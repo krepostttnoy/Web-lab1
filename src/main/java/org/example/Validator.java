@@ -29,7 +29,7 @@ public class Validator {
         }
 
         try {
-            var Y = Integer.parseInt(y);
+            var Y = Float.parseFloat(y);
             if (Y < -5 || Y > 3) {
                 throw new ValidationException("Y has forbidden value");
             }
