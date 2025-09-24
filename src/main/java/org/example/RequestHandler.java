@@ -24,15 +24,18 @@ public class RequestHandler {
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
-        validateParams(params);
+        String error = validateParams(params);
+        if (!error.isEmpty()) {
+            throw new ValidationException(error);
+        }
 
         this.x = Integer.parseInt(params.get("x"));
         this.y = Float.parseFloat(params.get("y"));
-        ArrayList<Integer> R = new ArrayList<>(0);
+        ArrayList<Integer> R = new ArrayList<>(rNumbers.length);
         for(int r: rNumbers){
             R.add(r);
-
         }
+
         this.r = R;
         //this.r = Integer.parseInt(params.get("r"));
     }

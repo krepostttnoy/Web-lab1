@@ -43,7 +43,7 @@
                         <td colspan="1">
                             <fieldset>
                                 <legend>Select Y:</legend>
-                                <input type="text" name="y" class="input-field">
+                                <input type="text" name="y" class="input-field" min="-5.0" max="3.0">
                             </fieldset>
                         </td>
                     </tr>
@@ -76,20 +76,22 @@
     </tr>
 </table>
 
-<table id="results-table" border="1">
-    <thead>
-    <tr>
-        <th>X</th>
-        <th>Y</th>
-        <th>R</th>
-        <th>Result</th>
-        <th>Execution time</th>
-        <th>Time</th>
-    </tr>
-    </thead>
-    <tbody id="results-body">
-    </tbody>
-</table>
+<arcticle class="content">
+    <table id="results-table" border="1">
+        <thead>
+        <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>R</th>
+            <th>Result</th>
+            <th>Execution time</th>
+            <th>Time</th>
+        </tr>
+        </thead>
+        <tbody id="results-body">
+        </tbody>
+    </table>
+</arcticle>
 <script src="script.js?v=1.1"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package org.example;
 import com.fastcgi.FCGIInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +16,7 @@ public class Main {
 
             long startTime = System.nanoTime();
             String createdResponse = "";
-            ArrayList<String> responses = new ArrayList<>();
+            List<String> responses = new ArrayList<>();
 
             for(int i = 0; i < handler.getSizeR(); i++){
                 boolean hit = calculate(handler.getX(), handler.getY(), handler.getR().get(i));

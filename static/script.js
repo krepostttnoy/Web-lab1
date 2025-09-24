@@ -15,8 +15,14 @@ function validateForm() {
     }
 
     const Y = parseFloat(y)
+
     if (Y < -5.0 || Y > 3.0 || isNaN(y) || !Number.isFinite(Y)) {
         alert("Y has to be a number from -5 to 3");
+        return false;
+    }
+
+    if (!/^-?\d+(\.\d{1,6})?$/.test(y)) {
+        alert("Max - 6 symbols after '.' ");
         return false;
     }
 
@@ -48,6 +54,66 @@ function selectX(button) {
     document.getElementById("hiddenX").value = button.value;
 }
 
+//pagination
+
+const itemsPerPage = 3;
+let currentPage = 0;
+let pagContainer;
+
+function getItems() {
+    return Array.from(document.querySelectorAll('#results-body tr'));
+}
+
+function showPage(page){
+    const items = getItems();
+    const startIndex = page * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    items.forEach((item, index) => {
+        item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+    });
+
+    updateActiveButtonStates();
+}
+
+function createPageButtons() {
+    const items = getItems();
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+
+    if (pagContainer) pagContainer.remove();
+
+    pagContainer = document.createElement('div');
+    pagContainer.classList.add('pagination');
+    document.querySelector('.content').appendChild(pagContainer);
+
+    for(let i = 0; i < totalPages; i++){
+        const pageBtn = document.createElement('button');
+        pageBtn.textContent = i + 1;
+
+        pageBtn.addEventListener('click', () => {
+            currentPage = i;
+            showPage(currentPage);
+        });
+
+        pagContainer.appendChild(pageBtn);
+    }
+    updateActiveButtonStates();
+}
+
+function updateActiveButtonStates(){
+    if (!pagContainer) return;
+    const pageBtns = pagContainer.querySelectorAll('button');
+    pageBtns.forEach((button, index) => {
+        button.classList.toggle('active', index === currentPage);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    createPageButtons();
+    showPage(currentPage);
+});
+
+
 // ajax
 
 function addRowToTable(data) {
@@ -56,7 +122,7 @@ function addRowToTable(data) {
     //const trow = tbody.insertRow();
 
     for(let i = 0; i < data.length; i++){
-        const trow = tbody.insertRow();
+        const trow = tbody.insertRow(0);
 
         trow.insertCell(0).textContent = data[i].x;
         trow.insertCell(1).textContent = data[i].y;
@@ -65,6 +131,9 @@ function addRowToTable(data) {
         trow.insertCell(4).textContent = data[i].execution_time;
         trow.insertCell(5).textContent = data[i].current_time;
     }
+
+    createPageButtons();
+    showPage(currentPage);
 }
 
 document.getElementById("pointForm").addEventListener("submit", async function (e) {
@@ -73,7 +142,7 @@ document.getElementById("pointForm").addEventListener("submit", async function (
     const validation = validateForm();
     if (!validation) return;
 
-    const url = `/calculate?x=${validation.x}&y=${validation.y}&r=${validation.r.join(",")}`;
+    const url = `http://localhost:24052/fcgi-bin/weblab1.jar?x=${validation.x}&y=${validation.y}&r=${validation.r}`;
 
     try {
         const resp = await fetch(url);
@@ -86,6 +155,9 @@ document.getElementById("pointForm").addEventListener("submit", async function (
         alert("Ошибка сети или сервера");
     }
 });
+
+
+//graph
 
 const canvas = document.getElementById("graph");
 const ctx = canvas.getContext("2d");

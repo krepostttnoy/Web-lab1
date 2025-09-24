@@ -27,6 +27,35 @@ body {
     color: black;
 }
 
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    outline: 1px solid #494a4f;
+    border-radius: 1px;
+    border: none;
+}
+
+.pagination button:active {
+    background-color: #ec6b6b;
+    color: white;
+}
+
+.hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
 input[type="button"], input[type="submit"] {
     background-color: #f2f2f2;
     cursor: pointer;
