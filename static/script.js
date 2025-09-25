@@ -56,7 +56,7 @@ function selectX(button) {
 
 //pagination
 
-const itemsPerPage = 3;
+const itemsPerPage = 5;
 let currentPage = 0;
 let pagContainer;
 
@@ -113,6 +113,57 @@ document.addEventListener('DOMContentLoaded', function () {
     showPage(currentPage);
 });
 
+//table sorting
+let table = document.getElementById("results-table");
+
+function getRowsForSorting(){
+    return Array.prototype.slice.call(table.querySelectorAll("tbody > tr"));
+}
+
+function sortTable(columnIndex){
+    let rows = getRowsForSorting();
+    
+    rows.sort(function (rowA, rowB){
+        let cellA = rowA.cells[columnIndex].textContent;
+        let cellB = rowB.cells[columnIndex].textContent;
+
+        if (!isNaN(cellA) && !isNaN(cellB)) {
+            return cellA - cellB;
+        }
+
+        return cellA.localeCompare(cellB);
+    });
+
+    rows.forEach(function (row){
+        table.querySelector("tbody").appendChild(row);
+    });
+}
+
+
+document.getElementById("xHeader").addEventListener("click", function() {
+    sortTable(0);
+    showPage(currentPage);
+});
+document.getElementById("yHeader").addEventListener("click", function() {
+    sortTable(1);
+    showPage(currentPage);
+});
+document.getElementById("rHeader").addEventListener("click", function() {
+    sortTable(2);
+    showPage(currentPage);
+});
+document.getElementById("resultHeader").addEventListener("click", function() {
+    sortTable(3);
+    showPage(currentPage);
+});
+document.getElementById("execTimeHeader").addEventListener("click", function() {
+    sortTable(4);
+    showPage(currentPage);
+});
+document.getElementById("timeHeader").addEventListener("click", function() {
+    sortTable(5);
+    showPage(currentPage);
+});
 
 // ajax
 

@@ -46,6 +46,17 @@ body {
     color: white;
 }
 
+.pagination button.active {
+    padding: 6px 10px;   /* уменьшаем */
+    font-size: 12px;     /* шрифт меньше */
+    background-color: #ccc; /* можешь выделить цветом */
+}
+
+.pagination button:hover {
+    background-color: #dcdcdc;
+}
+
+
 .hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
